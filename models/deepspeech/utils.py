@@ -45,4 +45,4 @@ def metadata_json_output(metadata):
     json_result["sentence"] = metadata_to_string(metadata)
     json_result["words"] = words_from_metadata(metadata)
     json_result["confidence"] = metadata.confidence
-    return json.dumps(json_result)
+    return json_result

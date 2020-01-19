@@ -1,3 +1,4 @@
+import os
 import glob
 import webrtcvad
 import logging
@@ -73,4 +74,17 @@ def resolve_models(dirName):
     logging.debug("Found Trie: %s" % trie)
 
     return pb, lm, trie
+
+
+def get_model_object(model_dir):
+    # Point to a path containing the pre-trained models & resolve ~ if used
+    model_path = os.path.expanduser(model_dir)
+
+    # Resolve all the paths of model files
+    output_graph, lm, trie = resolve_models(model_path)
+
+    # Load output_graph, alpahbet, lm and trie
+    model_retval = load_model(output_graph, lm, trie)
+
+    return model_retval[0]
 
