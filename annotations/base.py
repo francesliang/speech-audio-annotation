@@ -5,8 +5,8 @@ from typing import List
 
 class Annotation:
 
-    def __init__(self, fields: List):
-        self.fields = fields
+    def __init__(self):
+        return
 
     def format_output(self):
         return
