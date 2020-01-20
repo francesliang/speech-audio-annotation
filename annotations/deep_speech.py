@@ -12,10 +12,9 @@ DeepSpeechLabel = namedtuple('DeepSpeechLabel', ['id', 'path', 'sentence'])
 
 class DeepSpeechAnnotation(Annotation):
 
-    def __init__(self, audio_file):
+    def __init__(self):
         super(DeepSpeechAnnotation, self).__init__()
 
-        self.audio_file = audio_file
         self.fields = DeepSpeechLabel._fields
         self.df = pd.DataFrame(columns=self.fields)
 
