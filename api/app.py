@@ -1,4 +1,5 @@
 import os
+import base64
 from flask import Flask, request, jsonify
 
 from api.audio_handler import split_audio_to_files
@@ -53,8 +54,9 @@ def annotate():
 def retrieve_audio(clip_name):
     clip_path = os.path.join(cfg.clip_output_path, clip_name)
     audio_data, sample_rate, duration = read_wave(clip_path)
+    audio_str = str(audio_data)
     return jsonify({
-        "audio_data": audio_data,
+        "audio_data": audio_str,
         "sample_rate": sample_rate,
         "duration": duration
         }), 200
