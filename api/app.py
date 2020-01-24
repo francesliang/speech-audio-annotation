@@ -1,6 +1,7 @@
 import os
 import base64
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from api.audio_handler import split_audio_to_files
 from audio.utils import read_wave
@@ -10,6 +11,7 @@ import config as cfg
 
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
@@ -21,8 +23,9 @@ def index():
 def upload_audio_file():
     if request.method == 'POST':
         f = request.files['file']
-        f.save(f.filename)
-        audio_clips = split_audio_to_files(f.filename) #TODO handle audio bytes directly
+        file_path = os.path.join(cfg.clip_output_path, f.filename)
+        f.save(file_path)
+        audio_clips = split_audio_to_files(file_path) #TODO handle audio bytes directly
         return jsonify(audio_clips), 200
 
 
@@ -54,13 +57,13 @@ def annotate():
 def retrieve_audio(clip_name):
     clip_path = os.path.join(cfg.clip_output_path, clip_name)
     audio_data, sample_rate, duration = read_wave(clip_path)
-    audio_str = str(audio_data)
-    return jsonify({
-        "audio_data": audio_str,
-        "sample_rate": sample_rate,
-        "duration": duration
-        }), 200
+    return str(audio_data)
 
 
+@app.route('/get_audio_clips/<file_name>', methods=['GET'])
+def retrieve_audio_list(file_name):
+    file_base, ext = os.path.basename(file_name).split('.')
+    clips = [f for f in os.listdir(cfg.clip_output_path) if f.startswith(file_base)]
+    return jsonify(clips), 200
 
 
