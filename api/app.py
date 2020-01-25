@@ -32,8 +32,8 @@ def upload_audio_file():
 @app.route('/infer', methods=['POST'])
 def run_inference():
     if request.method == 'POST':
-        audio = request.form['audio_data']
-        sample_rate = request.form['sample_rate']
+        audio = request.json['audio_data']
+        sample_rate = request.json['sample_rate']
         result = infer_audio(audio, sample_rate)
         return jsonify(result), 200
 
@@ -57,7 +57,11 @@ def annotate():
 def retrieve_audio(clip_name):
     clip_path = os.path.join(cfg.clip_output_path, clip_name)
     audio_data, sample_rate, duration = read_wave(clip_path)
-    return str(audio_data)
+    response = {
+        "audio_data": str(audio_data),
+        "sample_rate": sample_rate
+    }
+    return jsonify(response), 200
 
 
 @app.route('/get_audio_clips/<file_name>', methods=['GET'])
