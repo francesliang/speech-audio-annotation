@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 from api.audio_handler import split_audio_to_files
 from audio.utils import read_wave
-from models.infer import infer_audio
+from models.infer import infer_audio_file
 from annotations.deep_speech import DeepSpeechAnnotation, DeepSpeechLabel
 import config as cfg
 
@@ -32,9 +32,9 @@ def upload_audio_file():
 @app.route('/infer', methods=['POST'])
 def run_inference():
     if request.method == 'POST':
-        audio = request.json['audio_data']
-        sample_rate = request.json['sample_rate']
-        result = infer_audio(audio, sample_rate)
+        audio_clip = request.json['audio_clip']
+        audio_path = os.path.join(cfg.clip_output_path, audio_clip)
+        result = infer_audio_file(audio_path)
         return jsonify(result), 200
 
 

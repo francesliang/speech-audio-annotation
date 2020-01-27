@@ -48,6 +48,12 @@ def infer_audio(audio_segment: object, sample_rate: int, model_obj: object = dee
     return output
 
 
+def infer_audio_file(audio_file: str, model_obj: object = deepspeech_model) -> Dict:
+    audio_data, sample_rate, duration = au.read_wave(audio_file)
+    output = infer_audio(audio_data, sample_rate, model_obj)
+    return output
+
+
 if __name__ == "__main__":
     wave_file = sys.argv[1]
     aggressive = sys.argv[2]
