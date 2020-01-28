@@ -19,7 +19,7 @@ class DeepSpeechAnnotation(Annotation):
         self.df = pd.DataFrame(columns=self.fields)
 
     def format_output(self, label: DeepSpeechLabel):
-        self.df = self.df.append(label._asdict())
+        self.df = self.df.append(label._asdict(), ignore_index=True)
 
 
     def write_output(self, output_path: str):

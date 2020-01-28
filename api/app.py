@@ -44,9 +44,9 @@ def annotate():
         # TODO Update annotation_out and annotation_obj
         annotation_out = "annotation.csv"
         annotation_obj = DeepSpeechAnnotation()
-        audio_id = request.form('clip_id')
-        audio_file_name = request.form['clip_file_name']
-        annotation = request.form['annotation']
+        audio_id = request.json['clip_id']
+        audio_file_name = request.json['clip_name']
+        annotation = request.json['annotation']
         label = DeepSpeechLabel(audio_id, audio_file_name, annotation)
         annotation_obj.format_output(label)
         annotation_obj.write_output(annotation_out)
