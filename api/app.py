@@ -42,8 +42,8 @@ def run_inference():
 def annotate():
     if request.method == 'POST':
         # TODO Update annotation_out and annotation_obj
-        annotation_out = "annotation.csv"
-        annotation_obj = DeepSpeechAnnotation()
+        annotation_out = os.path.join(cfg.annotation_output_path, "annotations.csv")
+        annotation_obj = DeepSpeechAnnotation(annotation_file=annotation_out)
         audio_id = request.json['clip_id']
         audio_file_name = request.json['clip_name']
         annotation = request.json['annotation']
