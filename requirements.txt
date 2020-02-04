@@ -3,3 +3,5 @@ webrtcvad
 pandas
 numpy
 Flask
+uwsgi
+flask-cors

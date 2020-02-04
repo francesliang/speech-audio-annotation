@@ -1,16 +1,16 @@
 import os
 import base64
-from flask import Flask, request, jsonify, Response
+from flask import request, jsonify, Response
 from flask_cors import CORS
 
-from api.audio_handler import split_audio_to_files
+from app.audio_handler import split_audio_to_files
 from audio.utils import read_wave
 from models.infer import infer_audio_file
 from annotations.deep_speech import DeepSpeechAnnotation, DeepSpeechLabel
 import config as cfg
+from app import app
 
 
-app = Flask(__name__)
 CORS(app)
 
 
