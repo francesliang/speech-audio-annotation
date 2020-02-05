@@ -1,7 +1,7 @@
 import os
 
 # Model configs
-model_dir = "deepspeech-0.6.1-models"
+model_dir = "/app/deepspeech-0.6.1-models"
 
 
 # Annotation configs
