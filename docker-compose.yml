@@ -6,6 +6,8 @@ services:
     build: .
     container_name: flask
     restart: always
+    volumes:
+      - ./outputs:/app/outputs
     expose:
       - 8080
 
