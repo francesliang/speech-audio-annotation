@@ -51,12 +51,17 @@ def run_recognition():
 @app.route('/annotate', methods=['POST'])
 def annotate():
     if request.method == 'POST':
-        # TODO Update annotation_out and annotation_obj
-        annotation_out = os.path.join(cfg.annotation_output_path, "annotations.csv")
-        annotation_obj = DeepSpeechAnnotation(annotation_file=annotation_out)
         audio_id = request.json['clip_id']
         audio_file_name = request.json['clip_name']
         annotation = request.json['annotation']
+        annotation_file = request.json['annotation_file']
+
+        if annotation_file:
+            annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".csv"
+        else:
+            annotation_out = os.path.join(cfg.annotation_output_path, "annotations.csv")
+        annotation_obj = DeepSpeechAnnotation(annotation_file=annotation_out)
+
         label = DeepSpeechLabel(audio_id, audio_file_name, annotation)
         annotation_obj.format_output(label)
         annotation_obj.write_output(annotation_out)
