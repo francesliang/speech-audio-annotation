@@ -7,6 +7,7 @@ from app.audio_handler import split_audio_to_files
 from audio.utils import read_wave
 from models.infer import infer_audio_file
 from annotations.deep_speech import DeepSpeechAnnotation, DeepSpeechLabel
+from speech_recognition.google_stt import recognise
 import config as cfg
 from app import app
 
@@ -35,6 +36,15 @@ def run_inference():
         audio_clip = request.json['audio_clip']
         audio_path = os.path.join(cfg.clip_output_path, audio_clip)
         result = infer_audio_file(audio_path)
+        return jsonify(result), 200
+
+
+@app.route('/recognise', methods=['POST'])
+def run_recognition():
+    if request.method == 'POST':
+        audio_clip = request.json['audio_clip']
+        audio_path = os.path.join(cfg.clip_output_path, audio_clip)
+        result = recognise(audio_path)
         return jsonify(result), 200
 
 
