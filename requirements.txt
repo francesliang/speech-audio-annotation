@@ -5,3 +5,4 @@ numpy
 Flask
 uwsgi
 flask-cors
+google-cloud-speech
