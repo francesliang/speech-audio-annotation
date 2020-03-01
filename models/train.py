@@ -6,8 +6,23 @@ import config as cfg
 
 
 def run_training():
-    "python3 DeepSpeech.py --n_hidden 2048 --checkpoint_dir /Users/xin/Projects/speech-audio-annotation/deepspeech-0.6.1-models --epochs 3 --train_files ../speech-audio-annotation/samples/clips/train.csv --dev_files ../speech-audio-annotation/samples/clips/dev.csv --test_files ../speech-audio-annotation/samples/clips/test.csv --learning_rate 0.0001 --export_dir ../speech-audio-annotation"
-    cmd = [
+
+    ### Split training dataset (TODO)
+
+    ### Convert training data
+    # "bin/import_cv2.py samples"
+    import_cmd = [
+        "python3",
+        os.path.join(cfg.deepspeech_path, "bin/import_cv2.py"),
+        cfg.annotation_output_path
+    ]
+    import_ps = sp.Popen(import_cmd)
+    outs, errs = import_ps.communicate()
+    print("Convert training data succeed: {}".format(outs))
+
+    ### Run model training
+    # "python3 DeepSpeech.py --n_hidden 2048 --checkpoint_dir /Users/xin/Projects/speech-audio-annotation/deepspeech-0.6.1-models --epochs 3 --train_files ../speech-audio-annotation/samples/clips/train.csv --dev_files ../speech-audio-annotation/samples/clips/dev.csv --test_files ../speech-audio-annotation/samples/clips/test.csv --learning_rate 0.0001 --export_dir ../speech-audio-annotation"
+    train_cmd = [
         "python3",
         os.path.join(cfg.deepspeech_path, "DeepSpeech.py"),
         "--n_hidden",
@@ -28,4 +43,4 @@ def run_training():
         cfg.export_dir
     ]
     print("start run_training")
-    sp.Popen(cmd)
+    sp.Popen(train_cmd)
