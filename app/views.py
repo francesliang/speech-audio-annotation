@@ -6,6 +6,7 @@ from flask_cors import CORS
 from app.audio_handler import split_audio_to_files
 from audio.utils import read_wave
 from models.infer import infer_audio_file
+from models.train import run_training
 from annotations.deep_speech import DeepSpeechAnnotation, DeepSpeechLabel
 from speech_recognition.google_stt import recognise
 import config as cfg
@@ -57,9 +58,9 @@ def annotate():
         annotation_file = request.json['annotation_file']
 
         if annotation_file:
-            annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".csv"
+            annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".tsv"
         else:
-            annotation_out = os.path.join(cfg.annotation_output_path, "annotations.csv")
+            annotation_out = os.path.join(cfg.annotation_output_path, "annotations.tsv")
         annotation_obj = DeepSpeechAnnotation(annotation_file=annotation_out)
 
         label = DeepSpeechLabel(audio_id, audio_file_name, annotation)
@@ -81,4 +82,9 @@ def retrieve_audio_list(file_name):
     clips = [f for f in os.listdir(cfg.clip_output_path) if f.startswith(file_base)]
     return jsonify(clips), 200
 
+
+@app.route('/train', methods=['GET'])
+def train_model():
+    run_training()
+    return "OK", 200
 

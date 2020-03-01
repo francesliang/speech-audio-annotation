@@ -26,5 +26,5 @@ class DeepSpeechAnnotation(Annotation):
 
 
     def write_output(self, output_path: str):
-        self.df.to_csv(output_path, columns=self.fields)
+        self.df.to_csv(output_path, columns=self.fields, sep='\t')
 
