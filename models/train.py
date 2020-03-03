@@ -5,10 +5,7 @@ import asyncio
 import config as cfg
 
 
-def run_training():
-
-    ### Split training dataset (TODO)
-
+def transform_training_data():
     ### Convert training data
     # "bin/import_cv2.py samples"
     import_cmd = [
@@ -16,9 +13,21 @@ def run_training():
         os.path.join(cfg.deepspeech_path, "bin/import_cv2.py"),
         cfg.annotation_output_path
     ]
-    import_ps = sp.Popen(import_cmd)
+    import_ps = sp.Popen(import_cmd, stdout=sp.PIPE, stderr=sp.STDOUT)
     outs, errs = import_ps.communicate()
-    print("Convert training data succeed: {}".format(outs))
+    is_succeed = bool(outs)
+    print("Transform training data succeed: {}".format(is_succeed))
+    return is_succeed
+
+
+def run_training():
+
+    ### Split training dataset (TODO)
+
+    ### Convert training data
+    if not transform_training_data():
+        print("Unable to transform training data.Training aborted.")
+        return
 
     ### Run model training
     # "python3 DeepSpeech.py --n_hidden 2048 --checkpoint_dir /Users/xin/Projects/speech-audio-annotation/deepspeech-0.6.1-models --epochs 3 --train_files ../speech-audio-annotation/samples/clips/train.csv --dev_files ../speech-audio-annotation/samples/clips/dev.csv --test_files ../speech-audio-annotation/samples/clips/test.csv --learning_rate 0.0001 --export_dir ../speech-audio-annotation"
