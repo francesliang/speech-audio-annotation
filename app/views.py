@@ -55,7 +55,7 @@ def annotate():
         audio_id = request.json['clip_id']
         audio_file_name = request.json['clip_name']
         annotation = request.json['annotation']
-        annotation_file = request.json['annotation_file']
+        annotation_file = request.json.get('annotation_file', None)
 
         if annotation_file:
             annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".tsv"
