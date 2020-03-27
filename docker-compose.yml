@@ -16,7 +16,7 @@ services:
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/.gcp/Audio-Stream-177f9e58ecfc.json
     expose:
-      - 8080
+      - 5000
 
   nginx:
     build: ./nginx
