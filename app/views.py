@@ -85,6 +85,7 @@ def retrieve_audio_list(file_name):
 
 @app.route('/train', methods=['GET'])
 def train_model():
+    # TODO update train params
     run_training()
     return "OK", 200
 

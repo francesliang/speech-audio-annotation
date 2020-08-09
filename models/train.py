@@ -3,6 +3,7 @@ import subprocess as sp
 import asyncio
 
 import config as cfg
+from models.utils import split_data
 
 
 def transform_training_data():
@@ -20,9 +21,10 @@ def transform_training_data():
     return is_succeed
 
 
-def run_training():
+def run_training(annotation_tsv):
 
-    ### Split training dataset (TODO)
+    ### Split training dataset
+    split_data(annotation_tsv, cfg.annotation_output_path)
 
     ### Convert training data
     if not transform_training_data():
