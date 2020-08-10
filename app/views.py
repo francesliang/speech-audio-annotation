@@ -83,9 +83,15 @@ def retrieve_audio_list(file_name):
     return jsonify(clips), 200
 
 
-@app.route('/train', methods=['GET'])
+@app.route('/train', methods=['POST'])
 def train_model():
-    # TODO update train params
-    run_training()
+    if request.method == 'POST':
+        annotation_file = request.json.get('annotation_file', None)
+
+        if annotation_file:
+            annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".tsv"
+        else:
+            annotation_out = os.path.join(cfg.annotation_output_path, "annotations.tsv")
+        run_training(annotation_out)
     return "OK", 200
 
