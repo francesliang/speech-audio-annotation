@@ -24,6 +24,7 @@ def transform_training_data():
 def run_training(annotation_tsv):
 
     ### Split training dataset
+    print("Split training data from: {}".format(annotation_tsv))
     split_data(annotation_tsv, cfg.annotation_output_path)
 
     ### Convert training data
@@ -51,7 +52,9 @@ def run_training(annotation_tsv):
         "--learning_rate",
         str(cfg.learning_rate),
         "--export_dir",
-        cfg.export_dir
+        cfg.export_dir,
+        "--load_cudnn",
+        True
     ]
-    print("start run_training")
+    print("Start run_training")
     sp.Popen(train_cmd)

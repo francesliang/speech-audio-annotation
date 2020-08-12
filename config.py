@@ -16,8 +16,8 @@ annotation_output_path = outputs_data_dir
 
 # Model configs
 model_dir = os.path.join(outputs_dir, "deepspeech-0.6.1-models")
+checkpoint_dir = os.path.join(outputs_dir, "deepspeech-0.6.1-checkpoint")
 n_hidden = 2048
-checkpoint_dir = model_dir
 epochs = 3
 train_files = os.path.join(clip_output_path, "train.csv")
 dev_files = os.path.join(clip_output_path, "dev.csv")
