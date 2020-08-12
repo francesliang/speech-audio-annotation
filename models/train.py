@@ -53,8 +53,7 @@ def run_training(annotation_tsv):
         str(cfg.learning_rate),
         "--export_dir",
         cfg.export_dir,
-        "--load_cudnn",
-        True
+        "--load_cudnn"
     ]
     print("Start run_training")
     sp.Popen(train_cmd)
