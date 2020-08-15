@@ -87,11 +87,13 @@ def retrieve_audio_list(file_name):
 def train_model():
     if request.method == 'POST':
         annotation_file = request.json.get('annotation_file', None)
+        epochs = request.json.get('epochs', cfg.epochs)
+        learning_rate = request.json.get('learning_rate', cfg.learning_rate)
 
         if annotation_file:
             annotation_out = os.path.join(cfg.annotation_output_path, annotation_file) + ".tsv"
         else:
             annotation_out = os.path.join(cfg.annotation_output_path, "annotations.tsv")
-        run_training(annotation_out)
+        run_training(annotation_out, epochs, learning_rate)
     return "OK", 200
 

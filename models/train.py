@@ -21,7 +21,7 @@ def transform_training_data():
     return is_succeed
 
 
-def run_training(annotation_tsv):
+def run_training(annotation_tsv, epochs=cfg.epochs, lr=cfg.learning_rate):
 
     ### Split training dataset
     print("Split training data from: {}".format(annotation_tsv))
@@ -42,7 +42,7 @@ def run_training(annotation_tsv):
         "--checkpoint_dir",
         cfg.checkpoint_dir,
         "--epochs",
-        str(cfg.epochs),
+        str(epochs),
         "--train_files",
         cfg.train_files,
         "--dev_files",
@@ -50,10 +50,10 @@ def run_training(annotation_tsv):
         "--test_files",
         cfg.test_files,
         "--learning_rate",
-        str(cfg.learning_rate),
+        str(lr),
         "--export_dir",
         cfg.export_dir,
         "--load_cudnn"
     ]
-    print("Start run_training")
+    print("Start model training for {} epochs with learning rate: {}".format(str(epochs), str(lr)))
     sp.Popen(train_cmd)
