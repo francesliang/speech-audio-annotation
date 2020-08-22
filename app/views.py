@@ -79,7 +79,7 @@ def retrieve_audio(clip_name):
 @app.route('/get_audio_clips/<file_name>', methods=['GET'])
 def retrieve_audio_list(file_name):
     file_base, ext = os.path.basename(file_name).split('.')
-    clips = [f for f in os.listdir(cfg.clip_output_path) if f.startswith(file_base)]
+    clips = [f for f in os.listdir(cfg.clip_output_path) if f.startswith(file_base) and "chunk_" in f]
     return jsonify(clips), 200
 
 

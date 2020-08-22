@@ -19,10 +19,11 @@ class DeepSpeechAnnotation(Annotation):
         if annotation_file is None or not os.path.exists(annotation_file):
             self.df = pd.DataFrame(columns=self.fields)
         else:
-            self.df = pd.read_csv(annotation_file, sep='\t'))
+            self.df = pd.read_csv(annotation_file, sep='\t')
 
     def format_output(self, label: DeepSpeechLabel):
         self.df = self.df.append(label._asdict(), ignore_index=True)
+        self.df = self.df.drop_duplicates(subset='path', keep="last")
 
 
     def write_output(self, output_path: str):
