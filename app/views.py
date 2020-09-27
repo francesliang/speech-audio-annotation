@@ -18,7 +18,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return
+    return "speech-audio-annotation"
 
 
 @app.route('/upload', methods=['POST'])
